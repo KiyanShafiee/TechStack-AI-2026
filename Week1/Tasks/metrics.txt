@@ -1,0 +1,3 @@
+Epoch 1: Accuracy = 0.75, Loss = 0.50
+Epoch 2: Accuracy = 0.82, Loss = 0.40
+Epoch 3: Accuracy = 0.89, Loss = 0.30
