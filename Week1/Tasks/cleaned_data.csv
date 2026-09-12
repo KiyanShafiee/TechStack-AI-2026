@@ -1,0 +1,6 @@
+user_id,age,app_purchases,in_app_purchases,category,total_spent
+101,22.0,0.0,5,Free,5.0
+102,28.0,50.0,20,Premium,70.0
+104,35.0,100.0,50,Premium,150.0
+105,40.0,0.0,10,Premium,10.0
+106,30.0,20.0,5,Free,25.0
