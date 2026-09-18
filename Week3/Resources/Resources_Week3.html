@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tech Stack AI · Week 3</title>
+<meta name="description" content="Supervised Machine Learning: Regression and Classification">
+<style>
+:root{
+  --bg:#0b1020;--panel:#11182b;--panel2:#151f36;--text:#eef3ff;--muted:#aab5cc;
+  --line:rgba(255,255,255,.09);--accent:#8b7cff;--accent2:#42d6c5;--gold:#ffc857;
+  --shadow:0 20px 60px rgba(0,0,0,.28);--radius:20px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:
+radial-gradient(circle at 10% 0%,rgba(139,124,255,.18),transparent 30%),radial-gradient(circle at 90% 10%,rgba(66,214,197,.14),transparent 26%),var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,calc(100% - 32px));margin:0 auto}
+.hero{padding:72px 0 36px}
+.kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04);color:#d9ddff;font-size:.84rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.1;letter-spacing:-.03em;max-width:900px;margin:22px 0 18px}
+.gradient{background:linear-gradient(90deg,#fff 10%,#bcb4ff 52%,#83eadb 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.1rem;color:var(--muted);max-width:760px;margin:0 0 26px}
+
+/* Tab Buttons Style */
+.trust{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;color:#c8d0e3;font-size:.9rem}
+.trust span{
+  padding:8px 18px;
+  border-radius:999px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  cursor: pointer; 
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+.trust span:hover { background:rgba(255,255,255,.1); }
+.trust span.selected {
+  border-color: var(--accent2);
+  background: rgba(66, 214, 197, 0.15);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(66, 214, 197, 0.2);
+}
+
+.section{padding:30px 0 60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));gap:20px; max-width: 1000px;}
+
+/* Animations and Tab Management */
+.tab-content { display: none; }
+.tab-content.active { 
+  display: block; 
+  animation: fadeIn 0.4s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card Styles */
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:25px;
+  box-shadow:var(--shadow);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover { border-color: rgba(255,255,255,0.2); }
+.card.featured{border-color:rgba(139,124,255,.3);background:linear-gradient(135deg,rgba(139,124,255,.11),rgba(66,214,197,.045))}
+
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tag{font-size:.72rem;font-weight:850;letter-spacing:.05em;text-transform:uppercase;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.07);color:#dbe3f7}
+.tag.official{color:#ffe3a2;background:rgba(255,200,87,.1)}
+.tag.essential{color:#fff3c7;background:rgba(255,200,87,.16);border:1px solid rgba(255,200,87,.28)}
+.tag.bonus{color:#ffc857;background:rgba(255,200,87,.15);border:1px solid rgba(255,200,87,.3)}
+
+.card h3{margin:0 0 10px;font-size:1.3rem; color:#fff;}
+.card p.desc{margin:0 0 20px;color:var(--muted);font-size:1rem; flex-grow: 1;}
+
+/* Document Links Style */
+.doc-links { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+.doc-item {
+  display: block;
+  padding: 15px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  transition: 0.2s ease;
+  text-decoration: none;
+}
+.doc-item:hover {
+  background: rgba(66, 214, 197, 0.08);
+  border-color: rgba(66, 214, 197, 0.4);
+  transform: translateX(4px);
+}
+.doc-item strong { display: block; color: #fff; font-size: 1.05rem; margin-bottom: 6px; }
+.doc-item p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+
+.link{display:inline-flex;align-items:center;gap:7px;font-weight:800;color:#fff;font-size:1.1rem; margin-top: auto;}.link:hover{color:#9df4e8}.arrow{transition:.2s}.link:hover .arrow{transform:translateX(5px)}
+footer{padding:42px 0 60px;color:#8894ae;border-top:1px solid var(--line);font-size:.88rem}.sources{font-size:.82rem;color:#75819a;margin-top:10px}
+@media(max-width:780px){.hero{padding-top:48px}.card{padding:20px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <span class="kicker">Tech Stack AI · Week 03</span>
+    <h1>Supervised Machine Learning:<br><span class="gradient">Regression and Classification</span></h1>
+    <p class="lead">Week 3: Logistic Regression, Cost Functions, Decision Boundaries, and Regularization.</p>
+    
+    <!-- Tab Buttons -->
+    <div class="trust">
+      <span class="nav-badge selected" data-target="tab-course">Main Course</span>
+      <span class="nav-badge" data-target="tab-docs">Documentation</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="section">
+  <div class="container">
+    
+    <!-- Main Course Content Tab -->
+    <div id="tab-course" class="tab-content active">
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 900px;">
+        
+        <!-- Mandatory Part: Weeks 1 & 2 -->
+        <article class="card featured essential">
+          <div class="meta">
+            <span class="tag essential">Mandatory</span>
+            <span class="tag official">Weeks 1 & 2</span>
+          </div>
+          <h3>Foundations & Regression</h3>
+          <p class="desc">Access the official videos, reading materials, and practice labs for <strong>Weeks 1 and 2</strong>. Completing these sections is required to build your baseline models and understand gradient descent.</p>
+          <a class="link" href="https://www.coursera.org/learn/machine-learning?specialization=machine-learning-introduction" target="_blank" rel="noopener">
+            Open Course <span class="arrow">→</span>
+          </a>
+        </article>
+
+        <!-- Optional Part: Week 3 & Kaggle Boost -->
+        <article class="card">
+          <div class="meta">
+            <span class="tag bonus">Optional · Kaggle Boost</span>
+            <span class="tag official">Week 3</span>
+          </div>
+          <h3>Classification & Regularization</h3>
+          <p class="desc">This content is officially scheduled for next week, but you are highly encouraged to watch it early! Applying <strong>Regularization</strong> techniques from Week 3 will give you a massive advantage in improving your model's performance for the <strong>Kaggle Task</strong>.</p>
+          <a class="link" href="https://www.coursera.org/learn/machine-learning?specialization=machine-learning-introduction" target="_blank" rel="noopener">
+            Watch Early <span class="arrow">→</span>
+          </a>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Documentation Tab -->
+    <div id="tab-docs" class="tab-content">
+      <div class="grid">
+        
+        <!-- Topic 1 -->
+        <article class="card">
+          <div class="meta"><span class="tag">Topic 1</span></div>
+          <h3>Overview & Supervised vs Unsupervised</h3>
+          <div class="doc-links">
+            <a href="https://developers.google.com/machine-learning/crash-course/framing/ml-terminology" target="_blank" class="doc-item">
+              <strong>Google ML Crash Course</strong>
+              <p>An excellent and standard overview of core machine learning terminology provided by Google.</p>
+            </a>
+            <a href="https://www.ibm.com/blog/supervised-vs-unsupervised-learning/" target="_blank" class="doc-item">
+              <strong>IBM: Supervised vs Unsupervised</strong>
+              <p>A highly comprehensive article by IBM detailing the differences between these two methods with practical examples.</p>
+            </a>
+          </div>
+        </article>
+
+        <!-- Topic 2 -->
+        <article class="card">
+          <div class="meta"><span class="tag">Topic 2</span></div>
+          <h3>Regression & Gradient Descent</h3>
+          <div class="doc-links">
+            <a href="https://machinelearningmastery.com/gradient-descent-for-machine-learning/" target="_blank" class="doc-item">
+              <strong>Machine Learning Mastery</strong>
+              <p>A clear, conceptual explanation of Gradient Descent, learning rates, and how to reach the global minimum without complex math.</p>
+            </a>
+            <a href="https://www.analyticsvidhya.com/blog/2021/10/everything-you-need-to-know-about-linear-regression/" target="_blank" class="doc-item">
+              <strong>Analytics Vidhya</strong>
+              <p>A step-by-step guide to linear regression and utilizing Gradient Descent to train models effectively.</p>
+            </a>
+          </div>
+        </article>
+
+        <!-- Topic 3 -->
+        <article class="card">
+          <div class="meta"><span class="tag">Topic 3</span></div>
+          <h3>Regression with Multiple Features</h3>
+          <div class="doc-links">
+            <a href="https://www.geeksforgeeks.org/ml-multiple-linear-regression-using-python/" target="_blank" class="doc-item">
+              <strong>GeeksforGeeks</strong>
+              <p>Learn the mathematical intuition and Python implementation of multiple linear regression.</p>
+            </a>
+          </div>
+        </article>
+
+        <!-- Topic 4 -->
+        <article class="card">
+          <div class="meta"><span class="tag">Topic 4</span></div>
+          <h3>Classification & Logistic Regression</h3>
+          <div class="doc-links">
+            <a href="https://www.datacamp.com/tutorial/understanding-logistic-regression-python" target="_blank" class="doc-item">
+              <strong>DataCamp Tutorial</strong>
+              <p>An exceptional educational document for understanding the Sigmoid function and handling classification tasks.</p>
+            </a>
+            <a href="https://machinelearningmastery.com/logistic-regression-for-machine-learning/" target="_blank" class="doc-item">
+              <strong>Machine Learning Mastery</strong>
+              <p>Discover why linear regression fails for classification and how logistic regression elegantly solves this problem.</p>
+            </a>
+          </div>
+        </article>
+
+        <!-- Topic 5 -->
+        <article class="card">
+          <div class="meta"><span class="tag">Topic 5</span></div>
+          <h3>Overfitting & Regularization</h3>
+          <div class="doc-links">
+            <a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_underfitting_overfitting.html" target="_blank" class="doc-item">
+              <strong>Scikit-Learn Docs</strong>
+              <p>A renowned visual guide demonstrating overfitting, underfitting, and the crucial difference between bias and variance.</p>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <strong>Tech Stack AI · Week 03</strong>
+    <div class="sources">Supervised Machine Learning: Regression and Classification</div>
+  </div>
+</footer>
+
+<script>
+  // JavaScript for Tab Management
+  const badges = document.querySelectorAll('.nav-badge');
+  const tabs = document.querySelectorAll('.tab-content');
+
+  badges.forEach(badge => {
+    badge.addEventListener('click', () => {
+      // 1. Remove active and selected classes from all
+      badges.forEach(b => b.classList.remove('selected'));
+      tabs.forEach(t => t.classList.remove('active'));
+
+      // 2. Add classes to the clicked item
+      badge.classList.add('selected');
+      const targetId = badge.getAttribute('data-target');
+      document.getElementById(targetId).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
